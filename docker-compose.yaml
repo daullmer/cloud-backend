@@ -1,0 +1,28 @@
+version: '3.3'
+
+services:
+    traefik:
+        image: traefik
+        ports:
+            - '80:80'
+            - '443:443'
+        container_name: traefik
+        volumes:
+            - '/home/ubuntu/traefik:/etc/traefik'
+            - '/var/run/docker.sock:/var/run/docker.sock:ro'
+        environment:
+            "CF_API_EMAIL": ${CF_API_EMAIL}
+            "CF_DNS_API_TOKEN": ${CF_DNS_API_TOKEN}
+
+    backend:
+        build:
+          context: .
+        ports:
+            - '8081:80'
+        volumes:
+            - '/home/ubuntu/PastWebcamImages:/PastImages'
+        labels:
+            traefik.enable: true
+            traefik.http.routers.backend.rule: "Host(`cloud-backend.dullmer.de`)"
+        environment:
+            Logging__Console__FormatterName: ""
