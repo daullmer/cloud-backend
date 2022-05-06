@@ -33,6 +33,7 @@ public class AnalyzeController : Controller
     public async Task<IEnumerable<DetectedFace>> AnalyzeImage()
     {
         var imageGuid = Guid.NewGuid();
+        Response.Headers.Add("BackendGUID", imageGuid.ToString());
         _logger.LogInformation("Analyzing new Image. Will be getting Guid {Guid}", imageGuid);
         
         // read body to stream

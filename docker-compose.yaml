@@ -20,7 +20,7 @@ services:
         ports:
             - '8081:80'
         volumes:
-            - '/home/ubuntu/PastWebcamImages:/PastImages'
+            - '/home/ubuntu/SavedImages:/app/PastImages'
         labels:
             traefik.enable: true
             traefik.http.routers.backend.rule: "Host(`cloud-backend.dullmer.de`)"
