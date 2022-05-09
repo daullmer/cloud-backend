@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CloudComputingBackend.Controllers;
 
-[Authorize]
 [ApiController]
 [Route("[controller]")]
 public class PastImagesController : Controller
@@ -20,6 +19,7 @@ public class PastImagesController : Controller
         if (!Directory.Exists(_imageBaseFolderPath)) Directory.CreateDirectory(_imageBaseFolderPath);
     }
 
+    [Authorize]
     [HttpGet(Name = "GetPastImages")]
     public IEnumerable<Guid> GetPastImages()
     {
@@ -44,6 +44,7 @@ public class PastImagesController : Controller
         return PhysicalFile(image, MediaTypeNames.Image.Jpeg);
     }
     
+    [Authorize]
     [HttpGet("{guid}/Vision")]
     public IActionResult GetPastVisionResult(Guid guid)
     {
