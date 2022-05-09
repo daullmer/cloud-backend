@@ -44,7 +44,7 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseCors(
-    options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
+    options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().WithExposedHeaders("*")
 );
 
 app.UseHttpsRedirection();
