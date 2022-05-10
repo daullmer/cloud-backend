@@ -1,8 +1,8 @@
+using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.CognitiveServices.Vision.Face;
 using Microsoft.Azure.CognitiveServices.Vision.Face.Models;
-using Newtonsoft.Json;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace CloudComputingBackend.Controllers;
@@ -76,6 +76,10 @@ public class AnalyzeController : Controller
         
         // Save result to directory
         await using var jsonStream = new FileStream(jsonPath, FileMode.Create, FileAccess.Write);
+        var options = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        };
         await JsonSerializer.SerializeAsync(jsonStream, detectedFaces, typeof(IList<DetectedFace>));
 
         return Ok(detectedFaces);
