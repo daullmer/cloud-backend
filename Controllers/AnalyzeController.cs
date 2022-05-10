@@ -76,13 +76,9 @@ public class AnalyzeController : Controller
         
         // Save result to directory
         await using var jsonStream = new FileStream(jsonPath, FileMode.Create, FileAccess.Write);
-        var options = new JsonSerializerOptions
-        {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-        };
         await JsonSerializer.SerializeAsync(jsonStream, detectedFaces, typeof(IList<DetectedFace>));
 
-        return Ok(detectedFaces);
+        return PhysicalFile(jsonPath, "application/json");
     }
     
     private static async Task<MemoryStream> GetMemoryStream(Stream inputStream)
