@@ -16,7 +16,7 @@ public class AnalyzeController : Controller
     private readonly string _imageBaseFolderPath;
     private readonly IFaceClient _faceClient;
 
-    public AnalyzeController(IConfiguration config, ILogger<AnalyzeController> logger)
+    public AnalyzeController(IConfiguration config, ILogger<AnalyzeController> logger, IConfiguration configuration)
     {
         _logger = logger;
         _imageBaseFolderPath = Path.Combine(Directory.GetCurrentDirectory(),
@@ -24,7 +24,8 @@ public class AnalyzeController : Controller
         if (!Directory.Exists(_imageBaseFolderPath)) Directory.CreateDirectory(_imageBaseFolderPath);
         
         // authenticate face client
-        _faceClient = new FaceClient(new ApiKeyServiceClientCredentials("9b255ab611dd467c863ecc36a2036125")) { Endpoint = "https://cloud-computing-vision.cognitiveservices.azure.com" };
+        var key = configuration["Keys:Face"];
+        _faceClient = new FaceClient(new ApiKeyServiceClientCredentials(key)) { Endpoint = "https://cloud-computing-vision.cognitiveservices.azure.com" };
         
     }
 
